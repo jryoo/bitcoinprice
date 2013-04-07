@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NOLAsafewater</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<%= render :partial => 'layouts/navbar' %>
+
+    <% if flash[:notice] %>
+      <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:warning] %>
+      <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:warning] %>
+      </div>
+    <% elsif flash[:alert] %>
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:alert] %>
+      </div>
+    <% elsif flash[:error] %>
+      <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+    <div class="container">
+  		<div class="row">
+  			<div class="span6">
+          <div id="recent_notices">
+            <h3>Recent Advisory Notices</h3>
+            <ul>
+            <% for entry in FeedEntry.all(:limit => 10, :order => "published_at desc") %>
+              <li><%= entry.published_at %> <%= link_to h(entry.name), entry.url %></li>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+  			<div class="span6"><%= yield %></div>
+  		</div>
+	  </div>
+</body>
+</html>

@@ -39,6 +39,7 @@ class MembersController < ApplicationController
         format.html { redirect_to root_path, notice: 'member was successfully created.' }
         format.json { render json: @member, status: :created, location: @member }
       else
+        flash[:error] = 'Could subscribe this number'
         format.html { render action: "new", notice: 'member was not successfully created.' }
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end

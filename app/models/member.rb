@@ -1,5 +1,8 @@
 class Member < ActiveRecord::Base
   attr_accessible :number, :carrier
+  validates :number, :carrier, :presence => true
+  validates :number, :uniqueness => true
+  validates :number, :numericality => { :only_integer => true }
 
   def self.send_RSS(message)
   	carrier_codes = {	"Verizon" 		=> "vtext.com",

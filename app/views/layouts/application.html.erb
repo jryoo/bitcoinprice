@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>NOLAsafewater</title>
+  <title>NOLAnotify</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<%= render :partial => 'layouts/navbar' %>
+  <div class="container">
+
+  	<%= render :partial => 'layouts/navbar' %>
 
     <% if flash[:notice] %>
       <div class="alert alert-info">
@@ -34,16 +39,19 @@
   		<div class="row">
   			<div class="span6">
           <div id="recent_notices">
-            <h3>Recent Advisory Notices</h3>
-            <ul>
-            <% for entry in FeedEntry.all(:limit => 10, :order => "published_at desc") %>
-              <li><%= entry.published_at %> <%= link_to h(entry.name), entry.url %></li>
-            <% end %>
-            </ul>
+            <h3 class="text-error">Recent Advisory Notices</h3>
+            <%= render :partial => 'layouts/notices' %>
           </div>
         </div>
-  			<div class="span6"><%= yield %></div>
+  			<div class="span6"> <%= yield %> </div>
   		</div>
-	  </div>
+    </div>
+    <hr>
+    <div align="center" class="footer">
+      <div class="container">
+        <p> </a> &copy; 2013 <a href="http://publicservice.berkeley.edu/alternativebreaks">NOLA Alternative Breaks</a> &middot; <a href="https://github.com/Jayyr">Jay Ryoo</a> 
+      </div>
+    </div><!-- FOOTER -->
+  </div><!-- Container -->
 </body>
 </html>

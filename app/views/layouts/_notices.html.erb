@@ -1,0 +1,18 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Notice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for entry in FeedEntry.all(:limit => 5, :order => "published_at desc") %>  <tr>
+        <td><%= entry.published_at.strftime("%B %d, %Y") %></td>
+  	    <td>
+          <strong><%= link_to h(entry.name), entry.url %></strong>
+          <%= entry.summary %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

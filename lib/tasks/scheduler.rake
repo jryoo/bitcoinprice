@@ -1,7 +1,7 @@
 desc "This task is called by the Heroku scheduler add-on"
 task :update_feed => :environment do
   puts "Updating feed..."
-  FeedEntry.update_from_feed_once_testing("http://www.swbno.org/rss.asp?feed=pr")
+  FeedEntry.update_from_feed("http://www.swbno.org/rss.asp?feed=pr")
   puts "done."
 end
 

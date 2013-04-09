@@ -36,11 +36,12 @@ class MembersController < ApplicationController
     
     respond_to do |format|
       if @member.save
-        format.html { redirect_to root_path, notice: 'member was successfully created.' }
+        Member.send_subscribed(@member.number, @member.carrier)
+        format.html { redirect_to root_path, notice: 'Member was successfully created.' }
         format.json { render json: @member, status: :created, location: @member }
       else
-        flash[:error] = 'Could subscribe this number'
-        format.html { render action: "new", notice: 'member was not successfully created.' }
+        flash[:error] = 'Could not subscribe this number'
+        format.html { render action: "new", notice: 'Member was not successfully created.' }
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
     end
@@ -60,12 +61,32 @@ class MembersController < ApplicationController
     #end
   end
 
+  def unsubscribe
+    @member = Member.new
+    member = Member.find_by_number(params[:member][:number])
+
+    if member
+      Member.send_unsubscribed(member.number, member.carrier)
+    end
+
+    respond_to do |format|
+      if member and member.destroy
+        format.html { redirect_to new_member_path, notice: 'Member was successfully unsubscribed.'}
+        format.json { head :no_content }
+      else
+        flash[:error] = 'This number is not in the database'
+        format.html { redirect_to root_path, error: 'Member was not successfully unsubscribed.' }
+        format.json { render json: member.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @member = Member.find(params[:id])
     @member.destroy
 
     respond_to do |format|
-      format.html { redirect_to members_path }
+      format.html { redirect_to root_path }
       format.json { head :no_content }
     end
   end

@@ -20,12 +20,28 @@
               <h3 class="text-success">About</h3>
               <p class="paragraph-font"> Several times a year, there are boil advisories that go out to the city of New Orleans. However, this notice is posted on an obscure government website. This application allows members to receive SMS notifications whenever a notice goes out from the Sewer and Water Board of New Orleans. </p>
             </div>
-            <%= yield %>
-            <div>
+            <hr>
+            <h3 class="text-info">Text Notify</h3>
+            <ul class="nav nav-pills">
+              <li class="active">
+                <a href="#subscribe" data-toggle="tab">Subscribe</a>
+              </li>
+              <li><a href="#unsubscribe" data-toggle="tab">Unsubscribe</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="subscribe">
+                <%= yield %>
+              </div> <!--/.TAB1 -->
+              <div class="tab-pane team" id="unsubscribe">
+                <%= render :partial => 'layouts/unsubscribe' %>
+              </div><!--/.TAB2 -->
+            </div><!--/.tab-content -->
+            <hr>
+            <div><!--Resources -->
               <h3 class="muted">Resources</h3>
               <a href="http://www.swbno.org/news_pressreleases.asp"><img src="assets/swnola.png" class="img-link-icons fade-in"/></a>
               <a href="http://www.calblueprint.org/"><img src="assets/blueprint.png" class="img-link-icons fade-in"/></a>
-            </div>
+            </div><!--Resources -->
         </div>
   			<div class="span9">
           <div id="recent_notices">

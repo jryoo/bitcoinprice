@@ -26,4 +26,46 @@ class Member < ActiveRecord::Base
 		end
 	end
   end
+  def self.send_subscribed(number, carrier)
+  	carrier_codes = {	"Verizon" 		=> "vtext.com",
+  						"AT&T"			=> "txt.att.net",
+  						"T-Mobile"		=> "tmomail.net",
+  						"Boost Mobile"	=> "myboostmobile.com",
+  						"Sprint"		=> "messaging.sprintpcs.com",
+  						"Virgin Mobile"	=> "vmobl.com"}
+	mail = Mail.deliver do
+	  to "#{number}@#{carrier_codes[carrier]}"
+	  from 'nolaswnotice@gmail.com'
+	  subject 'You have been subscribed to NOLA Notify!'
+	  text_part do
+	    body "Please go to http://nono.herokuapp.com for details."
+	  end
+	  html_part do
+	    content_type 'text/html; charset=UTF-8'
+	    body '<b>Hello world in HTML</b>'
+	  end
+	end
+  end
+
+  def self.send_unsubscribed(number, carrier)
+  	carrier_codes = {	"Verizon" 		=> "vtext.com",
+  						"AT&T"			=> "txt.att.net",
+  						"T-Mobile"		=> "tmomail.net",
+  						"Boost Mobile"	=> "myboostmobile.com",
+  						"Sprint"		=> "messaging.sprintpcs.com",
+  						"Virgin Mobile"	=> "vmobl.com"}
+	mail = Mail.deliver do
+	  to "#{number}@#{carrier_codes[carrier]}"
+	  from 'nolaswnotice@gmail.com'
+	  subject 'You have been unsubscribed from NOLA Notify!'
+	  text_part do
+	    body "Please go to http://nono.herokuapp.com for details."
+	  end
+	  html_part do
+	    content_type 'text/html; charset=UTF-8'
+	    body '<b>Hello world in HTML</b>'
+	  end
+	end
+  end
+
 end

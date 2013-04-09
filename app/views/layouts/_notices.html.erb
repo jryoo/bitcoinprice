@@ -6,7 +6,7 @@
     </tr>
   </thead>
   <tbody>
-    <% for entry in FeedEntry.all(:limit => 5, :order => "published_at desc") %>  <tr>
+    <% for entry in FeedEntry.all(:limit => 10, :order => "published_at desc") %>  <tr>
         <td><%= entry.published_at.strftime("%B %d, %Y") %></td>
   	    <td>
           <strong><%= link_to h(entry.name), entry.url %></strong>

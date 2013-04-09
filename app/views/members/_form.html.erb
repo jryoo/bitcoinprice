@@ -1,21 +1,10 @@
-<%= form_for @member, :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="control-group">
-    <%= f.label :number, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :number, :class => 'text_field', :placeholder => "1234567891" %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :carrier, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.select :carrier, @carriers, :class => 'text_field' %>
-    </div>
-  </div>
-
-
-  <div class="form-actions">
-    <%= f.submit 'Subscribe', :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                root_path, :class => 'btn' %>
-  </div>
+<%= form_for @member, :html => { :class => 'form_subscribe' } do |f| %>
+  
+	<%= f.label :number, :class => 'control-label hidden' %>
+	<div class="controls">
+	  <%= f.text_field :number, :class => 'input-block-level', :type => 'text', :placeholder => "1234567891" %>
+	</div>
+    <%= f.label :carrier, :class => 'control-label hidden' %>
+    <%= f.select :carrier, [['Carrier',nil]] + @carriers %>
+    <%= f.submit 'Subscribe', :class => 'btn btn-primary btn-large btn-block' %>
 <% end %>

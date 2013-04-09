@@ -11,39 +11,28 @@
 </head>
 <body>
   <div class="container">
-
   	<%= render :partial => 'layouts/navbar' %>
-
-    <% if flash[:notice] %>
-      <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <%= flash[:notice] %>
-      </div>
-    <% elsif flash[:warning] %>
-      <div class="alert alert-info">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <%= flash[:warning] %>
-      </div>
-    <% elsif flash[:alert] %>
-      <div class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <%= flash[:alert] %>
-      </div>
-    <% elsif flash[:error] %>
-      <div class="alert alert-error">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <%= flash[:error] %>
-      </div>
-    <% end %>
+    <%= render :partial => 'layouts/messages' %>
     <div class="container">
   		<div class="row">
-  			<div class="span6">
+        <div class="span3">
+            <div>
+              <h3 class="text-success">About</h3>
+              <p class="paragraph-font"> Several times a year, there are boil advisories that go out to the city of New Orleans. However, this notice is posted on an obscure government website. This application allows members to receive SMS notifications whenever a notice goes out from the Sewer and Water Board of New Orleans. </p>
+            </div>
+            <%= yield %>
+            <div>
+              <h3 class="muted">Resources</h3>
+              <a href="http://www.swbno.org/news_pressreleases.asp"><img src="assets/swnola.png" class="img-link-icons fade-in"/></a>
+              <a href="http://www.calblueprint.org/"><img src="assets/blueprint.png" class="img-link-icons fade-in"/></a>
+            </div>
+        </div>
+  			<div class="span9">
           <div id="recent_notices">
             <h3 class="text-error">Recent Advisory Notices</h3>
             <%= render :partial => 'layouts/notices' %>
           </div>
         </div>
-  			<div class="span6"> <%= yield %> </div>
   		</div>
     </div>
     <hr>

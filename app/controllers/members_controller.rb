@@ -2,21 +2,21 @@ class MembersController < ApplicationController
   before_filter :set_carriers
 
   def index
-    @members = Member.all
+    #@members = Member.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @members }
-    end
+    #respond_to do |format|
+    #  format.html # index.html.erb
+    #  format.json { render json: @members }
+    #end
   end
 
   def show
-    @member = Member.find(params[:id])
+    #@member = Member.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @member }
-    end
+    #respond_to do |format|
+    #  format.html # show.html.erb
+    #  format.json { render json: @member }
+    #end
   end
 
   def new
@@ -28,7 +28,7 @@ class MembersController < ApplicationController
   end
 
   def edit
-    @member = Member.find(params[:id])
+    #@member = Member.find(params[:id])
   end
 
   def create
@@ -47,17 +47,17 @@ class MembersController < ApplicationController
   end
 
   def update
-    @member = Member.find(params[:id])
+    #@member = Member.find(params[:id])
 
-    respond_to do |format|
-      if @member.update_attributes(params[:member])
-        format.html { redirect_to @member, notice: 'member was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @member.errors, status: :unprocessable_entity }
-      end
-    end
+    #respond_to do |format|
+    #  if @member.update_attributes(params[:member])
+    #    format.html { redirect_to @member, notice: 'member was successfully updated.' }
+    #    format.json { head :no_content }
+    #  else
+    #    format.html { render action: "edit" }
+    #    format.json { render json: @member.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   def destroy

@@ -28,6 +28,7 @@ class FeedEntry < ActiveRecord::Base
   				:guid 			=> entry.id
   			)
         Member.send_RSS(entry)
+        Twitter.update("[#{entry.published}][#{entry.title}] #{entry.summary} #{entry.url}")
   		end
   	end
   end

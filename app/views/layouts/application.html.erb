@@ -41,10 +41,18 @@
               <h3 class="muted">Resources</h3>
               <a href="http://www.swbno.org/news_pressreleases.asp"><img src="assets/swnola.png" class="img-link-icons fade-in"/></a>
               <a href="http://www.calblueprint.org/"><img src="assets/blueprint.png" class="img-link-icons fade-in"/></a>
+              <a href="http://publicservice.berkeley.edu"><img src="assets/CalCorpsSmall.gif" class="img-link-icons-cc fade-in"/></a>
             </div><!--Resources -->
             <hr>
             <div>
-              <%= render :partial => 'layouts/donate' %>
+              <div class="row-fluid">
+                <div class="span6">
+                  <%= render :partial => 'layouts/donate' %>
+                </div>
+                <div class="span6">
+                  <%= mail_to("nolaswnotice@gmail.com", "Contact", :class=>"btn btn-large btn-block")%>
+                </div>
+              </div>
             </div>
         </div>
   			<div class="span9">
@@ -58,7 +66,7 @@
     <hr>
     <div align="center" class="footer">
       <div class="container">
-        <p> </a> &copy; 2013 <a href="http://publicservice.berkeley.edu/alternativebreaks">NOLA Alternative Breaks</a> &middot; <a href="https://github.com/Jayyr">Jay Ryoo</a> 
+        <p> </a> &copy; 2013 <a href="https://github.com/Jayyr">Jay Ryoo</a> &middot; <%= mail_to("nolaswnotice@gmail.com", "Contact")%>
       </div>
     </div><!-- FOOTER -->
   </div><!-- Container -->

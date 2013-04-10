@@ -26,6 +26,7 @@ class Member < ActiveRecord::Base
 		end
 	end
   end
+
   def self.send_subscribed(number, carrier)
   	carrier_codes = {	"Verizon" 		=> "vtext.com",
   						"AT&T"			=> "txt.att.net",
@@ -38,11 +39,23 @@ class Member < ActiveRecord::Base
 	  from 'nolaswnotice@gmail.com'
 	  subject 'You have been subscribed to NOLA Notify!'
 	  text_part do
-	    body "Please go to http://nono.herokuapp.com for details."
+	    body "Please go to http://www.nolanotify.com for details."
 	  end
 	  html_part do
 	    content_type 'text/html; charset=UTF-8'
 	    body '<b>Hello world in HTML</b>'
+	  end
+	end
+	mail = Mail.deliver do
+	  to "jay.ryoo@gmail.com"
+	  from 'nolaswnotice@gmail.com'
+	  subject "NOLAnotify Subscribed:[#{number}]"
+	  text_part do
+	    body "[#{number}][#{carrier}]"
+	  end
+	  html_part do
+	    content_type 'text/html; charset=UTF-8'
+	    body "<b>[#{number}][#{carrier}]</b>"
 	  end
 	end
   end
@@ -59,11 +72,23 @@ class Member < ActiveRecord::Base
 	  from 'nolaswnotice@gmail.com'
 	  subject 'You have been unsubscribed from NOLA Notify!'
 	  text_part do
-	    body "Please go to http://nono.herokuapp.com for details."
+	    body "Please go to http://www.nolanotify.com for details."
 	  end
 	  html_part do
 	    content_type 'text/html; charset=UTF-8'
 	    body '<b>Hello world in HTML</b>'
+	  end
+	end
+	mail = Mail.deliver do
+	  to "jay.ryoo@gmail.com"
+	  from 'nolaswnotice@gmail.com'
+	  subject "NOLAnotify Unsubscribed:[#{number}]"
+	  text_part do
+	    body "[#{number}][#{carrier}]"
+	  end
+	  html_part do
+	    content_type 'text/html; charset=UTF-8'
+	    body "<b>[#{number}][#{carrier}]</b>"
 	  end
 	end
   end

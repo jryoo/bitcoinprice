@@ -47,7 +47,7 @@ class Member < ActiveRecord::Base
 	  end
 	end
 	mail = Mail.deliver do
-	  to "jay.ryoo@gmail.com"
+	  to ENV['JAY_EMAIL']
 	  from 'nolaswnotice@gmail.com'
 	  subject "NOLAnotify Subscribed:[#{number}]"
 	  text_part do
@@ -80,7 +80,7 @@ class Member < ActiveRecord::Base
 	  end
 	end
 	mail = Mail.deliver do
-	  to "jay.ryoo@gmail.com"
+	  to ENV['JAY_EMAIL']
 	  from 'nolaswnotice@gmail.com'
 	  subject "NOLAnotify Unsubscribed:[#{number}]"
 	  text_part do

@@ -28,7 +28,12 @@ class FeedEntry < ActiveRecord::Base
   				:guid 			=> entry.id
   			)
         Member.send_RSS(entry)
-        Twitter.update("[#{entry.published}][#{entry.title}] #{entry.summary} #{entry.url}")
+        begin
+          Member.send_RSS(entry)
+          #Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] http://www.nolanotify.com/")
+          Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] [#{entry.url}]")
+        rescue
+        end
   		end
   	end
   end

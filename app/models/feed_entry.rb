@@ -31,7 +31,7 @@ class FeedEntry < ActiveRecord::Base
         begin
           Member.send_RSS(entry)
           #Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] http://www.nolanotify.com/")
-          Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] [#{entry.summary}] [#{entry.url}]")
+          Twitter.update("[#{entry.title}](#{entry.published.strftime("%B %d, %Y")}) #{entry.url}")
         rescue
         end
   		end

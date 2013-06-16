@@ -1,1 +1,21 @@
-<%= render :partial => 'form' %>
+<ul class="nav nav-pills">
+  <li class="active">
+    <a href="#subscribe" data-toggle="tab">Subscribe</a>
+  </li>
+  <li><a href="#unsubscribe" data-toggle="tab">Unsubscribe</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="subscribe">
+    <%= render :partial => 'form' %>
+  </div> <!--/.TAB1 -->
+  <div class="tab-pane team" id="unsubscribe">
+    <%= render :partial => 'unsubscribe' %>
+  </div><!--/.TAB2 -->
+</div><!--/.tab-content -->
+<hr>
+<div><!--Resources -->
+  <h3 class="muted">Resources</h3>
+  <a href="http://www.swbno.org/news_pressreleases.asp"><img src="assets/swnola.png" class="img-link-icons fade-in"/></a>
+  <a href="http://www.calblueprint.org/"><img src="assets/blueprint.png" class="img-link-icons fade-in"/></a>
+  <a href="http://publicservice.berkeley.edu"><img src="assets/CalCorpsSmall.gif" class="img-link-icons-cc fade-in"/></a>
+</div><!--Resources -->

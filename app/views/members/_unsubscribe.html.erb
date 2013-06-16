@@ -1,0 +1,8 @@
+<%= form_for(@member, :url => '/members/unsubscribe') do |f| %>
+  
+  <%= f.label :number, :class => 'control-label hidden' %>
+  <div class="controls">
+    <%= f.text_field :number, :class => 'input-block-level', :type => 'text', :placeholder => "1234567891" %>
+  </div>
+    <%= f.submit 'Unsubscribe', :class => 'btn btn-warning btn-large btn-block' %>
+<% end %>

@@ -27,27 +27,6 @@ class Member < ActiveRecord::Base
     end
   end
 
-  def self.send_RSS_test(message)
-    carrier_codes = { "Verizon"     => "vtext.com",
-              "AT&T"      => "txt.att.net",
-              "T-Mobile"    => "tmomail.net",
-              "Boost Mobile"  => "myboostmobile.com",
-              "Sprint"    => "messaging.sprintpcs.com",
-              "Virgin Mobile" => "vmobl.com"}
-    mail = Mail.deliver do
-      to "#{ENV['TEST_NUMBER']}@#{carrier_codes[ENV['TEST_CARRIER']]}"
-      from 'nolaswnotice@gmail.com'
-      subject message.title
-      text_part do
-        body message.id
-      end
-      html_part do
-        content_type 'text/html; charset=UTF-8'
-        body '<b>Hello world in HTML</b>'
-      end
-    end
-  end
-
   def self.send_subscribed(number, carrier)
   	carrier_codes = {	"Verizon" 		=> "vtext.com",
   						"AT&T"			=> "txt.att.net",

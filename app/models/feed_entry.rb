@@ -40,15 +40,6 @@ class FeedEntry < ActiveRecord::Base
 
   # Testing the feed
   def self.add_entry_test(entry)
-    unless exists? :guid => entry.id
-      create!(
-        :name     => entry.title,
-        :summary    => entry.summary,
-        :url      => entry.url,
-        :published_at => entry.published,
-        :guid       => entry.id
-      )
-    end
     begin
       Member.send_RSS_test(entry)
     rescue

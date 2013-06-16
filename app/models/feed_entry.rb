@@ -6,9 +6,22 @@ class FeedEntry < ActiveRecord::Base
   # Calls add_entries
   def self.update_from_feed(feed_url)
   	feed = Feedzirra::Feed.fetch_and_parse(feed_url)
-    feed.sanitize_entries!
+    begin
+      feed.sanitize_entries!
+    rescue
+    end
   	add_entries(feed.entries)
   end
+
+  def self.test_feed(feed_url, ind)
+    feed = Feedzirra::Feed.fetch_and_parse(feed_url)
+    begin
+      feed.sanitize_entries!
+    rescue
+    end
+    add_entry_test(feed.entries[ind])
+  end
+
 
   # An extra function for testing purposes. It continuously fetches from feed every 15 minutes
   # Calls add_entries
@@ -23,6 +36,24 @@ class FeedEntry < ActiveRecord::Base
   end
 
   private
+
+
+  # Testing the feed
+  def self.add_entry_test(entry)
+    unless exists? :guid => entry.id
+      create!(
+        :name     => entry.title,
+        :summary    => entry.summary,
+        :url      => entry.url,
+        :published_at => entry.published,
+        :guid       => entry.id
+      )
+    end
+    begin
+      Member.send_RSS_test(entry)
+    rescue
+    end
+  end
 
   # Main function called by update_from_feed. It adds multiple entries from the feed
   def self.add_entries(entries)

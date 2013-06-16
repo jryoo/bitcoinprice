@@ -1,10 +1,17 @@
 class FeedEntry < ActiveRecord::Base
   attr_accessible :guid, :name, :published_at, :summary, :url
+
+  # Main function that is called by the scheduler add-on
+  # Sanitizes the feed (removes harmful stuff - not sure what that means)
+  # Calls add_entries
   def self.update_from_feed(feed_url)
   	feed = Feedzirra::Feed.fetch_and_parse(feed_url)
+    feed.sanitize_entries!
   	add_entries(feed.entries)
   end
 
+  # An extra function for testing purposes. It continuously fetches from feed every 15 minutes
+  # Calls add_entries
   def self.update_from_feed_continuously(feed_url, delay_interval = 15.minutes)
   	feed = Feedzirra::Feed.fetch_and_parse(feed_url)
     add_entries(feed.entries)
@@ -17,6 +24,7 @@ class FeedEntry < ActiveRecord::Base
 
   private
 
+  # Main function called by update_from_feed. It adds multiple entries from the feed
   def self.add_entries(entries)
   	entries.each do |entry|
   		unless exists? :guid => entry.id
@@ -27,7 +35,6 @@ class FeedEntry < ActiveRecord::Base
   				:published_at	=> entry.published,
   				:guid 			=> entry.id
   			)
-        Member.send_RSS(entry)
         begin
           Member.send_RSS(entry)
           #Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] http://www.nolanotify.com/")
@@ -38,6 +45,7 @@ class FeedEntry < ActiveRecord::Base
   	end
   end
 
+  # Function adds a single entry
   def self.add_entry(entry)
     unless exists? :guid => entry.id
       create!(
@@ -48,9 +56,15 @@ class FeedEntry < ActiveRecord::Base
         :guid       => entry.id
       )
     end
-    Member.send_RSS(entry)
+    begin
+      Member.send_RSS(entry)
+      #Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] http://www.nolanotify.com/")
+      Twitter.update("#{entry.title} (#{entry.published.strftime("%B %d, %Y")}) #{entry.url}")
+    rescue
+    end
   end
 
+  # Testing purpose
   def self.update_from_feed_once_testing(feed_url)
     feed = Feedzirra::Feed.fetch_and_parse(feed_url)
     add_entry(feed.entries[0])

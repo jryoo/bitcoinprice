@@ -19,7 +19,7 @@ class Member < ActiveRecord::Base
   		  from 'nolaswnotice@gmail.com'
   		  subject amount + " " + currency
   		  text_part do
-  		    body "Profit Made: " + ((amount.to_f - 545.63)*2).to_s
+  		    body "Profit Made: " + ((amount.to_f - 545.63)*2).round(2).to_s + " " + currency
   		  end
   		  html_part do
   		    content_type 'text/html; charset=UTF-8'

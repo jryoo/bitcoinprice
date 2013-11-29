@@ -10,7 +10,7 @@ class FeedEntry < ActiveRecord::Base
   def self.update_from_feed(feed_url)
   	# feed = Feedzirra::Feed.fetch_and_parse(feed_url)
     feed = JSON.parse(open(feed_url).read())
-  	add_entries(feed)
+  	add_entry(feed)
   end
 
   def self.add_entry(entry)

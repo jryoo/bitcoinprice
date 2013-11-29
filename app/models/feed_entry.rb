@@ -23,12 +23,14 @@ class FeedEntry < ActiveRecord::Base
       :guid => amount
     )
     begin
-      latest = order("created_at").offset(1).limit(1).last
+      latest = order("created_at").limit(all.length-1).last
       latest_value = 0
       if latest
         latest_value = ((latest.guid.to_f / 100).to_i) * 100
       end
       multhundred_value = ((amount.to_f / 100).to_i) * 100
+      puts latest.guid
+      puts latest.id
       puts latest_value
       puts multhundred_value
       if latest_value != multhundred_value

@@ -51,7 +51,7 @@ class Member < ActiveRecord::Base
 	mail = Mail.deliver do
 	  to ENV['JAY_EMAIL']
 	  from 'notifybitcoin@gmail.com'
-	  subject "NOLAnotify Subscribed:[#{number}]"
+	  subject "Bitcoin Notify Subscribed:[#{number}]"
 	  text_part do
 	    body "[#{number}][#{carrier}]"
 	  end
@@ -84,7 +84,7 @@ class Member < ActiveRecord::Base
 	mail = Mail.deliver do
 	  to ENV['JAY_EMAIL']
 	  from 'notifybitcoin@gmail.com'
-	  subject "NOLAnotify Unsubscribed:[#{number}]"
+	  subject "Bitcoin Notify Unsubscribed:[#{number}]"
 	  text_part do
 	    body "[#{number}][#{carrier}]"
 	  end

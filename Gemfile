@@ -34,13 +34,13 @@ group :production do
   gem 'pg'
 end
 
-gem 'feedzirra'
+#gem 'feedzirra'
 gem 'jquery-rails'
 
 gem 'mail'
 gem 'json'
 
-gem 'twitter'
+# gem 'twitter'
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

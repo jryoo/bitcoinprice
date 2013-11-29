@@ -30,6 +30,7 @@ class FeedEntry < ActiveRecord::Base
       if @@pastvalue != multhundred_value
         puts "hello"
         @@pastvalue = multhundred_value
+        puts @@pastvalue
         Member.send_RSS(entry)
       end
     rescue

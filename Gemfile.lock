@@ -169,6 +169,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   feedzirra
   jquery-rails
+  json
   less-rails
   mail
   pg

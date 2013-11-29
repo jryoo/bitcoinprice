@@ -1,76 +1,96 @@
+require 'open-uri'
+
 class FeedEntry < ActiveRecord::Base
+  @@pastvalue = 0
   attr_accessible :guid, :name, :published_at, :summary, :url
 
   # Main function that is called by the scheduler add-on
   # Sanitizes the feed (removes harmful stuff - not sure what that means)
   # Calls add_entries
   def self.update_from_feed(feed_url)
-  	feed = Feedzirra::Feed.fetch_and_parse(feed_url)
-    begin
-      feed.sanitize_entries!
-    rescue
-    end
-  	add_entries(feed.entries)
+  	# feed = Feedzirra::Feed.fetch_and_parse(feed_url)
+    feed = JSON.parse(open(feed_url).read())
+  	add_entries(feed)
   end
 
-  # An extra function for testing purposes. It continuously fetches from feed every 15 minutes
-  # Calls add_entries
-  def self.update_from_feed_continuously(feed_url, delay_interval = 15.minutes)
-  	feed = Feedzirra::Feed.fetch_and_parse(feed_url)
-    add_entries(feed.entries)
-    loop do
-      sleep delay_interval
-      feed = Feedzirra::Feed.update(feed)
-      add_entries(feed.new_entries) if feed.updated?
-    end
-  end
-
-  private
-
-  # Main function called by update_from_feed. It adds multiple entries from the feed
-  def self.add_entries(entries)
-  	entries.each do |entry|
-  		unless exists? :guid => entry.id
-  			create!(
-  				:name			=> entry.title,
-  				:summary		=> entry.summary,
-  				:url 			=> entry.url,
-  				:published_at	=> entry.published,
-  				:guid 			=> entry.id
-  			)
-        begin
-          Member.send_RSS(entry)
-          #Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] http://www.nolanotify.com/")
-          Twitter.update("#{entry.title} (#{entry.published.strftime("%B %d, %Y")}) #{entry.url}")
-        rescue
-        end
-  		end
-  	end
-  end
-
-  # Function adds a single entry
   def self.add_entry(entry)
-    unless exists? :guid => entry.id
-      create!(
-        :name     => entry.title,
-        :summary    => entry.summary,
-        :url      => entry.url,
-        :published_at => entry.published,
-        :guid       => entry.id
-      )
-    end
+    amount = entry['total']['amount']
+    currency = entry['total']['currency']
+    create!(
+      :name =>  amount + " " + currency,
+      :summary => "Profit Made: " + ((amount.to_f - 545.63)*2).to_s,
+      :url => 'https://coinbase.com/charts',
+      :published_at => Time.now(),
+      :guid => 123
+    )
     begin
-      Member.send_RSS(entry)
-      #Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] http://www.nolanotify.com/")
-      Twitter.update("#{entry.title} (#{entry.published.strftime("%B %d, %Y")}) #{entry.url}")
+      multhundred_value = ((amount.to_f / 100).to_i) * 100
+      if @@pastvalue != multhundred_value
+        Member.send_RSS(entry)
+        @@pastvalue = multhundred_value
+      end
     rescue
     end
   end
 
-  # Testing purpose
-  def self.update_from_feed_once_testing(feed_url)
-    feed = Feedzirra::Feed.fetch_and_parse(feed_url)
-    add_entry(feed.entries[0])
-  end
+  # # An extra function for testing purposes. It continuously fetches from feed every 15 minutes
+  # # Calls add_entries
+  # def self.update_from_feed_continuously(feed_url, delay_interval = 15.minutes)
+  # 	feed = Feedzirra::Feed.fetch_and_parse(feed_url)
+  #   add_entries(feed.entries)
+  #   loop do
+  #     sleep delay_interval
+  #     feed = Feedzirra::Feed.update(feed)
+  #     add_entries(feed.new_entries) if feed.updated?
+  #   end
+  # end
+
+  # private
+
+  # # Main function called by update_from_feed. It adds multiple entries from the feed
+  # def self.add_entries(entries)
+  # 	entries.each do |entry|
+  # 		unless exists? :guid => entry.id
+  # 			create!(
+  # 				:name			=> entry.title,
+  # 				:summary		=> entry.summary,
+  # 				:url 			=> entry.url,
+  # 				:published_at	=> entry.published,
+  # 				:guid 			=> entry.id
+  # 			)
+  #       begin
+  #         Member.send_RSS(entry)
+  #         #Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] http://www.nolanotify.com/")
+  #         Twitter.update("#{entry.title} (#{entry.published.strftime("%B %d, %Y")}) #{entry.url}")
+  #       rescue
+  #       end
+  # 		end
+  # 	end
+  # end
+
+  # # Function adds a single entry
+  # def self.add_entry(entry)
+  #   unless exists? :guid => entry.id
+  #     create!(
+  #       :name     => entry.title,
+  #       :summary    => entry.summary,
+  #       :url      => entry.url,
+  #       :published_at => entry.published,
+  #       :guid       => entry.id
+  #     )
+  #   end
+  #   begin
+  #     Member.send_RSS(entry)
+  #     #Twitter.update("[#{entry.published.strftime("%B %d, %Y")}][#{entry.title}] http://www.nolanotify.com/")
+  #     Twitter.update("#{entry.title} (#{entry.published.strftime("%B %d, %Y")}) #{entry.url}")
+  #   rescue
+  #   end
+  # end
+
+  # # Testing purpose
+  # def self.update_from_feed_once_testing(feed_url)
+  #   feed = Feedzirra::Feed.fetch_and_parse(feed_url)
+  #   add_entry(feed.entries[0])
+  # end
 
 end

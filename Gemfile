@@ -38,6 +38,7 @@ gem 'feedzirra'
 gem 'jquery-rails'
 
 gem 'mail'
+gem 'json'
 
 gem 'twitter'
 # To use ActiveModel has_secure_password

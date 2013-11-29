@@ -4,20 +4,22 @@ class Member < ActiveRecord::Base
   validates :number, :uniqueness => true
   validates :number, :numericality => { :only_integer => true }
 
-  def self.send_RSS(message)
+  def self.send_RSS(entry)
   	carrier_codes = {	"Verizon" 		=> "vtext.com",
   						"AT&T"			=> "txt.att.net",
   						"T-Mobile"		=> "tmomail.net",
   						"Boost Mobile"	=> "myboostmobile.com",
   						"Sprint"		=> "messaging.sprintpcs.com",
   						"Virgin Mobile"	=> "vmobl.com"}
+    amount = entry['total']['amount']
+    currency = entry['total']['currency']
   	for memb in Member.all()
   		mail = Mail.deliver do
   		  to "#{memb.number}@#{carrier_codes[memb.carrier]}"
   		  from 'nolaswnotice@gmail.com'
-  		  subject message.title
+  		  subject amount + " " + currency
   		  text_part do
-  		    body message.id
+  		    body "Profit Made: " + ((amount.to_f - 545.63)*2).to_s
   		  end
   		  html_part do
   		    content_type 'text/html; charset=UTF-8'

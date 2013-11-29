@@ -1,7 +1,6 @@
 require 'open-uri'
 
 class FeedEntry < ActiveRecord::Base
-  @@pastvalue = 0
   attr_accessible :guid, :name, :published_at, :summary, :url
 
   # Main function that is called by the scheduler add-on
@@ -21,17 +20,20 @@ class FeedEntry < ActiveRecord::Base
       :summary => "Profit Made: " + ((amount.to_f - 545.63)*2).round(2).to_s + " " + currency,
       :url => 'https://coinbase.com/charts',
       :published_at => Time.now.utc.getlocal,
-      :guid => 123
+      :guid => amount
     )
     begin
+      latest = order("created_at").offset(1).limit(1).last
+      latest_value = 0
+      if latest
+        latest_value = ((latest.guid.to_f / 100).to_i) * 100
+      end
       multhundred_value = ((amount.to_f / 100).to_i) * 100
-      puts @@pastvalue
+      puts latest_value
       puts multhundred_value
-      if @@pastvalue != multhundred_value
-        puts "hello"
-        @@pastvalue = multhundred_value
-        puts @@pastvalue
+      if latest_value != multhundred_value
         Member.send_RSS(entry)
+        puts "sent RSS"
       end
     rescue
     end

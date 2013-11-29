@@ -25,6 +25,8 @@ class FeedEntry < ActiveRecord::Base
     )
     begin
       multhundred_value = ((amount.to_f / 100).to_i) * 100
+      puts @@pastvalue
+      puts multhundred_value
       if @@pastvalue != multhundred_value
         Member.send_RSS(entry)
         @@pastvalue = multhundred_value

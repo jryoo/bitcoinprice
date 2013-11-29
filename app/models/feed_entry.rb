@@ -28,8 +28,9 @@ class FeedEntry < ActiveRecord::Base
       puts @@pastvalue
       puts multhundred_value
       if @@pastvalue != multhundred_value
-        Member.send_RSS(entry)
+        puts "hello"
         @@pastvalue = multhundred_value
+        Member.send_RSS(entry)
       end
     rescue
     end

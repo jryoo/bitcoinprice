@@ -16,7 +16,7 @@ class Member < ActiveRecord::Base
   	for memb in Member.all()
   		mail = Mail.deliver do
   		  to "#{memb.number}@#{carrier_codes[memb.carrier]}"
-  		  from 'nolaswnotice@gmail.com'
+  		  from 'notifybitcoin@gmail.com'
   		  subject amount + " " + currency
   		  text_part do
   		    body "Profit Made: " + ((amount.to_f - 545.63)*2).round(2).to_s + " " + currency
@@ -38,10 +38,10 @@ class Member < ActiveRecord::Base
   						"Virgin Mobile"	=> "vmobl.com"}
 	mail = Mail.deliver do
 	  to "#{number}@#{carrier_codes[carrier]}"
-	  from 'nolaswnotice@gmail.com'
-	  subject 'You have been subscribed to NOLA Notify!'
+	  from 'notifybitcoin@gmail.com'
+	  subject 'You have been subscribed to Bitcoin Notify!'
 	  text_part do
-	    body "Please go to http://www.nolanotify.com for details."
+	    body "Please go to http://bitcoinnotify.herokuapp.com/ for details."
 	  end
 	  html_part do
 	    content_type 'text/html; charset=UTF-8'
@@ -50,7 +50,7 @@ class Member < ActiveRecord::Base
 	end
 	mail = Mail.deliver do
 	  to ENV['JAY_EMAIL']
-	  from 'nolaswnotice@gmail.com'
+	  from 'notifybitcoin@gmail.com'
 	  subject "NOLAnotify Subscribed:[#{number}]"
 	  text_part do
 	    body "[#{number}][#{carrier}]"
@@ -71,10 +71,10 @@ class Member < ActiveRecord::Base
   						"Virgin Mobile"	=> "vmobl.com"}
 	mail = Mail.deliver do
 	  to "#{number}@#{carrier_codes[carrier]}"
-	  from 'nolaswnotice@gmail.com'
-	  subject 'You have been unsubscribed from NOLA Notify!'
+	  from 'notifybitcoin@gmail.com'
+	  subject 'You have been unsubscribed from Bitcoin Notify!'
 	  text_part do
-	    body "Please go to http://www.nolanotify.com for details."
+	    body "Please go to http://bitcoinnotify.herokuapp.com/ for details."
 	  end
 	  html_part do
 	    content_type 'text/html; charset=UTF-8'
@@ -83,7 +83,7 @@ class Member < ActiveRecord::Base
 	end
 	mail = Mail.deliver do
 	  to ENV['JAY_EMAIL']
-	  from 'nolaswnotice@gmail.com'
+	  from 'notifybitcoin@gmail.com'
 	  subject "NOLAnotify Unsubscribed:[#{number}]"
 	  text_part do
 	    body "[#{number}][#{carrier}]"

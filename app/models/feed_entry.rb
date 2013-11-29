@@ -27,10 +27,10 @@ class FeedEntry < ActiveRecord::Base
       latest_value = 0
       if latest
         latest_value = ((latest.guid.to_f / 100).to_i) * 100
+        puts latest.guid
+        puts latest.id
       end
       multhundred_value = ((amount.to_f / 100).to_i) * 100
-      puts latest.guid
-      puts latest.id
       puts latest_value
       puts multhundred_value
       if latest_value != multhundred_value

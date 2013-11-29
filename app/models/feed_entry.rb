@@ -19,7 +19,7 @@ class FeedEntry < ActiveRecord::Base
       :name =>  amount + " " + currency,
       :summary => "Profit Made: " + ((amount.to_f - 545.63)*2).round(2).to_s + " " + currency,
       :url => 'https://coinbase.com/charts',
-      :published_at => Time.now.utc.getlocal,
+      :published_at => Time.now.utc,
       :guid => amount
     )
     begin
